@@ -58,30 +58,17 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
-# fi
+ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Outer Space
-alias baphomet="ssh evandro@evandrocarreira.com.br"
-alias demiurgo="ssh evandro@vivala.com.br"
 
 # Holy Git!
 alias gitlog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --all"
@@ -92,5 +79,12 @@ alias gcd="gco dev"
 alias art="php artisan"
 alias serv81="art serve --port=8081"
 
-# Guide me
-alias vivala="cd /var/www/html/vivala;gst"
+function start_tmux() {
+    if type tmux &> /dev/null; then
+        #if not inside a tmux session, and if no session is started, start a new session
+        if [[ $HOST == "is95" && -z "$TMUX" && -z $TERMINAL_CONTEXT ]]; then
+            (tmux -2 attach || tmux -2 new-session)
+        fi
+    fi
+}
+start_tmux
